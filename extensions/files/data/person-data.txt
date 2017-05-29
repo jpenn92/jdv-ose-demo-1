@@ -1,4 +1,4 @@
-﻿SSN,Name,Nationality,DOB
+SSN,Name,Nationality,DOB
 123-45-6789,John Doe,IQ,11-11-1950
 234-56-7890,Jane Doe,AF,12-12-1951
 345-67-8901,Jim Doe,SYR,10-10-1980
