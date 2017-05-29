@@ -3,7 +3,7 @@
     <model name="file">
         <source name="text-connector" translator-name="file" connection-jndi-name="java:/persondata-file-DS"/>
     </model>
-    <model name="marketdata" type="VIRTUAL">
+    <model name="persondata" type="VIRTUAL">
         <metadata type="DDL"><![CDATA[                
         CREATE VIEW PersonData (
             SSN string PRIMARY KEY,
