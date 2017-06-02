@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vdb name="flightdata-file" version="1">
+    <model name="file">
+        <source name="text-connector" translator-name="file" connection-jndi-name="java:/flightdata-file-DS"/>
+    </model>
+    <model name="flightdata" type="VIRTUAL">
+        <metadata type="DDL"><![CDATA[
+        CREATE VIEW FlightData (
+            Id string PRIMARY KEY,
+            Airline string,
+	          FlightNo string,
+	          SSN string,
+            DepartLoc string,
+            ArriveLoc string,
+            TravelDate string            
+        ) AS  
+          SELECT SP.Id, SP.Airline, SP.FlightNo, SP.SSN, SP.DepartLoc, SP.ArriveLoc, SP.TravelDate
+          FROM (EXEC file.getTextFiles('flight-data.txt')) AS f, 
+            TEXTTABLE(f.file COLUMNS Id string, Airline string, FlightNo string, SSN string, DepartLoc string, ArriveLoc string, TravelDate string HEADER) AS SP;   
+        ]]> </metadata>
+    </model>
+    <model name="file">
+        <source name="text-connector" translator-name="file" connection-jndi-name="java:/persondata-file-DS"/>
+    </model>
+    <model name="persondata" type="VIRTUAL">
+        <metadata type="DDL"><![CDATA[                
+        CREATE VIEW PersonData (
+            SSN string PRIMARY KEY,
+            Name string,
+	    Nationality string,
+	    DOB string
+        ) AS  
+          SELECT SP.SSN, SP.Name, SP.Nationality, SP.DOB
+          FROM (EXEC file.getTextFiles('person-data.txt')) AS f, 
+            TEXTTABLE(f.file COLUMNS SSN string, Name string, Nationality string, DOB string HEADER) AS SP;
+        ]]> </metadata>
+    </model>
+    <model name="allpersondata" type="VIRTUAL">
+    <property name="imports" value="persondata"/>
+    <metadata type="DDL"><![CDATA[
+      CREATE VIEW PERSON (
+	    SSN string,
+            Name string,
+	    Nationality string,
+	    DOB string,
+	    Id string PRIMARY KEY,
+            Airline string,
+	    FlightNo string,
+	    DepartLoc string,
+            ArriveLoc string,
+            TravelDate string
+      ) 
+      AS
+      SELECT P.SSN,
+            P.Name,
+	    P.Nationality,
+	    P.DOB,
+	    T.Id,
+            T.Airline,
+	    T.FlightNo,
+	    T.DepartLoc,
+            T.ArriveLoc,
+            T.TravelDate 
+      FROM persondata.PERSONDATA P, flightdata.FLIGHTDATA T 
+      WHERE P.SSN = T.SSN;
+    ]]></metadata>
+  </model>
+</vdb>
