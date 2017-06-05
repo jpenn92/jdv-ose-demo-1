@@ -20,7 +20,7 @@
         ]]> </metadata>
     </model>
 	<model name="person-file">
-        <source name="text-connector" translator-name="person-file" connection-jndi-name="java:/persondata-file-DS"/>
+        <source name="text-connector" translator-name="file" connection-jndi-name="java:/persondata-file-DS"/>
     </model>
     <model name="persondata" type="VIRTUAL">
         <metadata type="DDL"><![CDATA[                
