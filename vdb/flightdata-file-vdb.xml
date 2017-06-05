@@ -32,7 +32,7 @@
         ) AS  
           SELECT SP.SSN, SP.Name, SP.Nationality, SP.DOB
           FROM (EXEC person-file.getTextFiles('person-data.txt')) AS f, 
-            TEXTTABLE(f.person-file COLUMNS SSN string, Name string, Nationality string, DOB string HEADER) AS SP;
+            TEXTTABLE(f.file COLUMNS SSN string, Name string, Nationality string, DOB string HEADER) AS SP;
         ]]> </metadata>
     </model>
     <model name="allpersondata" type="VIRTUAL">
