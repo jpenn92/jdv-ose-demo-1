@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<vdb name="flightdata-file" version="1">
+<vdb name="personflightdata" version="1">
     <model name="file">
         <source name="text-connector" translator-name="file" connection-jndi-name="java:/flightdata-file-DS"/>
     </model>
